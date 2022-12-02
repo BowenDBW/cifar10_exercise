@@ -21,7 +21,7 @@ class Net(nn.Module):
         # 全连接层2
         self.fc2 = nn.Linear(120, 84)  # input 120, output: 84
         # 全连接层3
-        self.fc3 = nn.Linear(16 * 5 * 5, 120)  # input 84, output: 10
+        self.fc3 = nn.Linear(84, 10)  # input 84, output: 10
 
     def forward(self, x):
         # 卷积 1
