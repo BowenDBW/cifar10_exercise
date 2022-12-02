@@ -109,7 +109,7 @@ with torch.no_grad():
         outputs = model(images)
         _, predicted = torch.max(outputs, dim=1)  # 获取每一行最大的索引
         c = (predicted == labels).squeeze()  # squeeze() 去掉 0 维的默认，unsqueeze 增加 1 维
-        if labels.shape[0] == 128:
+        if labels.shape[0] == BATCH_SIZE:
             for i in range(BATCH_SIZE):
                 label = labels[i]  # 获取每一个 label
                 class_correct[label] += c[i].item()
