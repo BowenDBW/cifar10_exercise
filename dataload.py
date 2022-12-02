@@ -10,7 +10,7 @@ import torch.optim as optim
 import network
 
 # 设置 transforms
-transform = transforms.Compose([
+transform = transforms.Compose  ([
     transforms.ToTensor(),  # Numpy -> Tensor
     transforms.Normalize((0.5, 0.5, 0.5), (0.5, 0.5, 0.5))  # 归一化 -1 ~ 1
 ])
@@ -61,6 +61,7 @@ optimizer = optim.SGD(net.parameters(), lr=0.001, momentum=0.9)  # 优化器, �
 EPOCHS = 200  # 学习轮数
 
 for epoch in range(EPOCHS):
+
     train_loss = 0.0  # 用于每一轮的损失变化
     for i, (datas, labels) in enumerate(train_loader):
         datas, labels = datas.to('cuda'), labels.to('cuda')
@@ -109,4 +110,12 @@ with torch.no_grad():
     for (images, labels) in test_loader:
         outputs = model(images)
         _, predicted = torch.max(outputs, dim=1)  # 获取每一行最大的索引
-        c = (predicted == labels).squeeze()  # squeeze() 去掉
+        c = (predicted == labels).squeeze()  # squeeze() 去掉 0 维的默认，unsqueeze 增加 1 维
+        if labels.shape[0] == 128:
+            for i in range[BATCH_SIZE]:
+                label = labels[i]  # 获取每一个 label
+                class_correct[label] += c[i].item()
+                total[label] += 1
+
+for i in range(10):
+    print("正确率：%5s : %2d %%" % (classes[i], 100 * class_correct[i] / total[i]))
